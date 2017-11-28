@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 扫描指定包(将带有Componet注释的类定义为Sprimg Bean) -->
+    <context:componet-scan bean-package="cn.naturemix.proxy.spring_aop"/>
+
+    <!-- 配置一个代理 -->
+    <bean id="greetingProxy" class="cn.naturemix.proxy.spring_aop.ProxyFactoryBean">
+        <property name="interfaces" value="cn.naturemix.proxy.spring_aop.Greeting"/> <!-- 需要代理的接口 -->
+        <property name="target" ref="greetingImpl"/> <!-- 接口实现类 -->
+        <property name="interceptorNames"> <!-- 拦截器名称(也就是增强类名称，Spring Bean的 id) -->
+            <list>
+                <value>greetingAroundAdvice</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>
